@@ -24,6 +24,7 @@
       lighthouse = callPackageUnstable ./clients/consensus/lighthouse {};
       prysm = callPackage ./clients/consensus/prysm {inherit bls blst;};
       teku = callPackage ./clients/consensus/teku {};
+      nimbus-eth2 = callPackageUnstable ./clients/consensus/nimbus-eth2 {};
 
       # Execution Clients
       erigon = callPackage ./clients/execution/erigon {};
@@ -89,6 +90,9 @@
 
       # consensus / lighthouse
       lighthouse.bin = "lighthouse";
+
+      # consensus / nimbus-eth2
+      nimbus-eth2.bin = "nimbus-eth2";
 
       # execution clients
       besu.bin = "besu";
