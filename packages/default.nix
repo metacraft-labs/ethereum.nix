@@ -28,6 +28,7 @@
       prysm = callPackage ./clients/consensus/prysm {inherit bls blst;};
       teku = callPackage ./clients/consensus/teku {};
       nimbus = callPackageUnstable ./clients/consensus/nimbus {};
+      nimbus-eth2 = callPackage ./clients/consensus/nimbus-eth2 {};
 
       # Execution Clients
       erigon = callPackage ./clients/execution/erigon {};
@@ -114,6 +115,9 @@
         nimbus-beacon-node.bin = "nimbus_beacon_node";
         nimbus-validator-client.bin = "nimbus_validator_client";
       };
+
+      # consensus / nimbus-eth2
+      nimbus-eth2.bin = "nimbus_beacon_node";
 
       # execution clients
       besu.bin = "besu";
