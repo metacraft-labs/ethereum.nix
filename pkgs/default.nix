@@ -58,6 +58,13 @@
       mev-rs = callPackage ./mev-rs {};
       nethermind = callPackageUnstable ./nethermind {};
       nimbus = callPackageUnstable ./nimbus {};
+      nimbus-eth2 = callPackageUnstable ./nimbus-eth2 {
+        # For now the nimbus team prefers nim 1.6 over 2.0.
+        # In newer versions of `pkgsUnstable` `nim` points to v2.0.0 in older it is 1.6.
+        # In newer versions the `nim1` package exists but not in older.
+        # See: https://github.com/status-im/nimbus-build-system/commits/master/vendor
+        nim = pkgsUnstable.nim1 or pkgsUnstable.nim;
+      };
       prysm = callPackage ./prysm {inherit bls blst;};
       reth = callPackageUnstable ./reth {};
       rocketpool = callPackage ./rocketpool {};
