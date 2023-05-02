@@ -15,6 +15,7 @@
       ./mev-boost
       ./nethermind
       ./nimbus-beacon
+      ./nimbus-eth2
       ./prysm-beacon
       ./prysm-validator
       ./restore
