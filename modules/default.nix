@@ -18,6 +18,7 @@
       ./prysm-beacon
       ./prysm-validator
       ./restore
+      ./nimbus-eth2
     ];
   };
 }
