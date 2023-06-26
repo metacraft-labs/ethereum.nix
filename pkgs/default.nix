@@ -33,6 +33,9 @@
       dirk = callPackage ./by-name/dirk {inherit bls mcl;};
       eigenlayer = callPackage ./by-name/eigenlayer {};
       erigon = callPackage ./by-name/erigon {};
+      erigon-blst-portable = erigon.overrideAttrs (_finalAttrs: _previousAttrs: {
+        CGO_CFLAGS = "-O -D__BLST_PORTABLE__";
+      });
       eth2-testnet-genesis = callPackage ./by-name/eth2-testnet-genesis {inherit bls;};
       eth2-val-tools = callPackage ./by-name/eth2-val-tools {inherit bls mcl;};
       eth-validator-watcher = callPackage ./by-name/eth-validator-watcher {};

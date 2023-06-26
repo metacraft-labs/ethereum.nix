@@ -102,6 +102,11 @@ in {
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
+
+            package =
+              if cfg.blst-portable
+              then pkgs.erigon-blst-portable
+              else cfg.package;
           in
             nameValuePair serviceName (mkIf cfg.enable {
               description = "Erigon Ethereum node (${erigonName})";
