@@ -35,6 +35,9 @@
       dreamboat = callPackage ./by-name/dr/dreamboat {inherit blst;};
       eigenlayer = callPackage ./by-name/ei/eigenlayer {};
       erigon = callPackage ./by-name/er/erigon {};
+      erigon-blst-portable = erigon.overrideAttrs (_finalAttrs: _previousAttrs: {
+        CGO_CFLAGS = "-O -D__BLST_PORTABLE__";
+      });
       eth2-testnet-genesis = callPackage ./by-name/et/eth2-testnet-genesis {inherit bls;};
       eth2-val-tools = callPackage ./by-name/et/eth2-val-tools {inherit bls mcl;};
       eth-validator-watcher = callPackage2311 ./by-name/et/eth-validator-watcher {};

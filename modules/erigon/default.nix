@@ -102,6 +102,11 @@ in {
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
+
+            package =
+              if cfg.blst-portable
+              then pkgs.erigon-blst-portable
+              else cfg.package;
           in
             nameValuePair serviceName (mkIf cfg.enable {
               description = "Erigon Ethereum node (${erigonName})";
@@ -117,7 +122,7 @@ in {
                   ExecStartPre = mkIf cfg.subVolume (mkBefore [
                     "+${scripts.setupSubVolume} /var/lib/private/${serviceName}"
                   ]);
-                  ExecStart = "${cfg.package}/bin/erigon ${scriptArgs}";
+                  ExecStart = "${package}/bin/erigon ${scriptArgs}";
                 }
                 (mkIf (cfg.args.authrpc.jwtsecret != null) {
                   LoadCredential = ["jwtsecret:${cfg.args.authrpc.jwtsecret}"];
