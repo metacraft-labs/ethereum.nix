@@ -151,7 +151,6 @@ in {
               serviceConfig = mkMerge [
                 baseServiceConfig
                 {
-                  User = serviceName;
                   StateDirectory = serviceName;
                   ExecStartPre = trustedNodeSync;
                   ExecStart = ''${cfg.package}/bin/nimbus_beacon_node ${beaconNodeArgs}'';
