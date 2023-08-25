@@ -5,7 +5,8 @@
   pkgs,
   ...
 }: let
-  inherit (lib.lists) optionals;
+  inherit (lib.lists) findFirst optionals;
+  inherit (lib.strings) hasPrefix;
   inherit
     (lib)
     concatStringsSep
@@ -68,6 +69,11 @@ in {
           serviceName = "erigon-${erigonName}";
         in
           cfg: let
+            jwtsecret =
+              if cfg.args.authrpc.jwtsecret != null
+              then ''--authrpc.jwtsecret=''${CREDENTIALS_DIRECTORY}/jwtsecret''
+              else "";
+
             scriptArgs = let
               # replace enable flags like --http.enable with just --http
               pathReducer = path: let
@@ -82,9 +88,13 @@ in {
                   inherit pathReducer opts;
                   inherit (cfg) args;
                 };
+              specialArgs = ["--authrpc.jwtsecret"];
+              isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
+              filteredArgs = builtins.filter isNormalArg args;
             in ''
               --datadir %S/${serviceName} \
-              ${concatStringsSep " \\\n" args} \
+              ${jwtsecret} \
+              ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
 
@@ -109,6 +119,9 @@ in {
                   ]);
                   ExecStart = "${package}/bin/erigon ${scriptArgs}";
                 }
+                (mkIf (cfg.args.authrpc.jwtsecret != null) {
+                  LoadCredential = ["jwtsecret:${cfg.args.authrpc.jwtsecret}"];
+                })
               ];
             })
       )
