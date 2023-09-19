@@ -135,11 +135,25 @@ in {
               ${trustedNodeUrl} \
               ${backfilling}'';
 
+            # When running trustedNodeSync after passing once, it gives an error
+            # and doesn't continue to execute execStart. The problem occurs when
+            # the service is restarted and execStartPre runs again. So we check
+            # for the existence of a file in the folder, and that way we know if
+            # Nimbus is running for the first time or not.
+
             trustedNodeSync =
               if cfg.args.trusted-node-url != null
-              then ''
-                ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${nodeSyncArgs}
-              ''
+              then
+                pkgs.writeShellScript "trustedNodeSync.sh" ''
+                  ls -lah /var/lib/private/
+                  if [ -f "/var/lib/private/nimbus-eth2/db/nbc.sqlite3" ]; then
+                    echo "skipping trustedNodeSync";
+                    exit 0
+                  else
+                    echo "starting trustedNodeSync";
+                    ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${nodeSyncArgs}
+                  fi
+                ''
               else null;
           in
             nameValuePair serviceName (mkIf cfg.enable {
