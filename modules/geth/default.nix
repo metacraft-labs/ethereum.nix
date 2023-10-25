@@ -95,8 +95,13 @@ in {
                 if cfg.args.authrpc.jwtsecret != null
                 then "--authrpc.jwtsecret %d/jwtsecret"
                 else "";
+
+              ipc =
+                if cfg.args.ipcEnable
+                then ""
+                else "--ipcdisable";
             in ''
-              --ipcdisable ${network} ${jwtSecret} \
+              ${ipc} ${network} ${jwtSecret} \
               --datadir %S/${serviceName} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
