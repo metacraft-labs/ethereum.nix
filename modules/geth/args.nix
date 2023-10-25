@@ -179,4 +179,10 @@ with lib; {
     default = null;
     description = mdDoc "Data directory for Geth. Defaults to '%S/geth-\<name\>', which generally resolves to /var/lib/geth-\<name\>.";
   };
+
+  ipcEnable = mkOption {
+    type = types.bool;
+    default = false;
+    description = mdDoc "Enable the IPC-RPC server";
+  };
 }
