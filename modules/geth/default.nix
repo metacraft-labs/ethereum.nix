@@ -81,7 +81,7 @@ in {
                 };
 
               # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--authrpc.jwtsecret"];
+              specialArgs = ["--network" "--authrpc.jwtsecret" "--ipcEnable"];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
 
               filteredArgs = builtins.filter isNormalArg args;
@@ -96,13 +96,18 @@ in {
                 then "--authrpc.jwtsecret %d/jwtsecret"
                 else "";
 
+              ipc =
+                if cfg.args.ipcEnable
+                then ""
+                else "--ipcdisable";
+
               datadir =
                 if cfg.args.datadir != null
                 then "--datadir ${cfg.args.datadir}"
                 else "--datadir %S/${serviceName}";
             in ''
+              ${ipc} ${network} ${jwtSecret} \
               ${datadir} \
-              --ipcdisable ${network} ${jwtSecret} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
