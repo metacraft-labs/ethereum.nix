@@ -173,4 +173,10 @@ with lib; {
     default = 50;
     description = mdDoc "Maximum peers to connect to.";
   };
+
+  ipcEnable = mkOption {
+    type = types.bool;
+    default = false;
+    description = mdDoc "Enable the IPC-RPC server";
+  };
 }
