@@ -23,14 +23,14 @@
 assert nim.version == "1.6.12" || nim.version == "1.6.14";
   stdenv.mkDerivation rec {
     pname = "nimbus";
-    rev = "d014d0a51cca1dda13d34e3de860aa4287afdb36";
-    version = "23.8.0";
+    rev = "v23.10.0";
+    version = "23.10.0";
 
     src = fetchFromGitHub {
       owner = "status-im";
       repo = "nimbus-eth2";
       inherit rev;
-      hash = "sha256-NfCXooS3vCrLzKYusl4MeMSVtc/ZQzRnq2E+QJUhNL8=";
+      hash = "sha256-eXfHwexoWbrlsXwdNT2TQWlFl526aQfRNxxW6s/khHA=";
       fetchSubmodules = true;
     };
 
