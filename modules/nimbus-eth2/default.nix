@@ -79,7 +79,8 @@ in {
               then ''--web3-url=${concatStringsSep " --web3-url=" cfg.args.web3-urls}''
               else "";
 
-            dataDir = ''--data-dir="%S/${serviceName}"'';
+            dataDirPath = "%S/${serviceName}";
+            dataDir = ''--data-dir="${dataDirPath}"'';
 
             beaconNodeArgs = let
               # generate args
@@ -131,7 +132,6 @@ in {
 
             nodeSyncArgs = ''
               ${network} \
-              ${dataDir} \
               ${trustedNodeUrl} \
               ${backfilling}'';
 
@@ -143,17 +143,20 @@ in {
 
             trustedNodeSync =
               if cfg.args.trusted-node-url != null
-              then
-                pkgs.writeShellScript "trustedNodeSync.sh" ''
-                  ls -lah /var/lib/private/
-                  if [ -f "/var/lib/private/nimbus-eth2/db/nbc.sqlite3" ]; then
+              then let
+                script = pkgs.writeShellScript "trustedNodeSync.sh" ''
+                  datadir="$1"
+                  shift
+                  if [ -f "$datadir/db/nbc.sqlite3" ]; then
                     echo "skipping trustedNodeSync";
                     exit 0
                   else
                     echo "starting trustedNodeSync";
-                    ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync ${nodeSyncArgs}
+                    set -x
+                    ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync "$@"
                   fi
-                ''
+                '';
+              in "${script} ${dataDirPath} ${dataDir} ${nodeSyncArgs}"
               else null;
           in
             nameValuePair serviceName (mkIf cfg.enable {
