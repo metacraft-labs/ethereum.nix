@@ -81,7 +81,7 @@ in {
                 };
 
               # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--authrpc.jwtsecret"];
+              specialArgs = ["--network" "--authrpc.jwtsecret" "--ipcEnable"];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
 
               filteredArgs = builtins.filter isNormalArg args;
