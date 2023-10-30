@@ -125,4 +125,14 @@ with lib; {
     default = true;
     description = mdDoc "History backfill.";
   };
+
+  payload-builder = {
+    enable = lib.mkEnableOption (mdDoc "Enable external payload builder.");
+    url = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      example = "http://localhost:18550/";
+      description = mdDoc "Payload builder URL.";
+    };
+  };
 }
