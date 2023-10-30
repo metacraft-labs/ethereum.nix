@@ -31,6 +31,16 @@ in {
   ###### implementation
 
   config = mkIf (eachBeacon != {}) {
+    assertions =
+      mapAttrsToList
+      (
+        name: cfg: {
+          assertion = cfg.args.payload-builder.enable -> cfg.args.payload-builder.url != null;
+          message = "services.ethereum.nimbus-eth2.payload-builder must have `url` specified, if enabled";
+        }
+      )
+      eachBeacon;
+
     # configure the firewall for each service
     networking.firewall = let
       openFirewall = filterAttrs (_: cfg: cfg.openFirewall) eachBeacon;
@@ -79,6 +89,11 @@ in {
               then ''--web3-url=${concatStringsSep " --web3-url=" cfg.args.web3-urls}''
               else "";
 
+            payloadBuilder =
+              if cfg.args.payload-builder.enable
+              then "--payload-builder=true --payload-builder-url=${cfg.args.payload-builder.url}"
+              else "";
+
             dataDirPath = "%S/${serviceName}";
             dataDir = ''--data-dir="${dataDirPath}"'';
 
@@ -119,13 +134,14 @@ in {
                   inherit pathReducer;
                 };
               # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--trusted-node-url" "--backfill"];
+              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--trusted-node-url" "--backfill" "--payload-builder"];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
               filteredArgs = builtins.filter isNormalArg args;
             in ''
               ${network} ${jwtSecret} \
               ${web3Url} \
               ${dataDir} \
+              ${payloadBuilder} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
             '';
