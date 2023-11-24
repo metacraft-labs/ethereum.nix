@@ -116,6 +116,27 @@ with lib; {
       default = 6060;
       description = "Port number of Go Ethereum metrics service.";
     };
+
+    influxdb = {
+      enable = mkEnableOption (mdDoc "Enable metrics export/push to an external InfluxDB database");
+      endpoint = mkOption {
+        type = types.str;
+        default = "http://127.0.0.1:8086";
+        description = mdDoc "InfluxDB API endpoint to report metrics to.";
+      };
+
+      username = mkOption {
+        type = types.str;
+        default = "geth";
+        description = mdDoc "Username to authorize access to the database.";
+      };
+
+      password = mkOption {
+        type = types.str;
+        default = "test";
+        description = mdDoc "Password to authorize access to the database.";
+      };
+    };
   };
 
   network = mkOption {
