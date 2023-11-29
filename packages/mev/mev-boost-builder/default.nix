@@ -11,7 +11,7 @@ buildGoModule rec {
     owner = "flashbots";
     repo = "${pname}";
     rev = "v${version}";
-    hash = "sha256-5c0a+/dl1/B1PdEMsrUGfjgCE/zZtm6mBNHKBFTyoGc=";
+    hash = "sha256-cP2Wi6vLNSyFvaWnKWPifw+PeABZthA/wjAECtX6OCw=";
   };
 
   vendorHash = "sha256-PwsJjcgPXQuOtXDr4NjF7IEk+nrhDBfEnQQyyBFFSjE=";
