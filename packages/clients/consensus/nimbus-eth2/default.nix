@@ -20,7 +20,11 @@
   ],
 }:
 # Nim version(s) that are known to be stable
-assert nim.version == "1.6.12" || nim.version == "1.6.14";
+assert (
+  lib.assertMsg
+  (nim.version == "1.6.12" || nim.version == "1.6.14")
+  "Unsupported Nim version: ${nim.version}"
+);
   stdenv.mkDerivation rec {
     pname = "nimbus";
     rev = "v23.10.1";
