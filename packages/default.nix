@@ -13,6 +13,7 @@
     inherit (pkgs) callPackage;
     inherit (lib.extras.flakes) platformPkgs platformApps;
     callPackageUnstable = pkgsUnstable.callPackage;
+    poetry2nix = inputs.poetry2nix.lib.mkPoetry2Nix {inherit pkgs;};
   in {
     packages = platformPkgs system rec {
       # Consensus Clients
@@ -73,7 +74,7 @@
 
       # Solidity
       slither = callPackageUnstable ./solidity/analyzers/slither {};
-      wake = callPackageUnstable ./solidity/frameworks/wake {};
+      wake = callPackageUnstable ./solidity/frameworks/wake { inherit poetry2nix; };
 
       # Libs
       evmc = callPackage ./libs/evmc {};
