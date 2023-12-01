@@ -74,6 +74,11 @@ in {
               then ''--jwt-secret="%d/jwt-secret"''
               else "";
 
+            keymanagerTokenFile =
+              if cfg.args.keymanager.token-file != null
+              then ''--keymanager-token-file="%d/keymanager-token-file"''
+              else "";
+
             trustedNodeUrl =
               if cfg.args.trusted-node-url != null
               then ''--trusted-node-url="${cfg.args.trusted-node-url}"''
@@ -134,13 +139,14 @@ in {
                   inherit pathReducer;
                 };
               # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--trusted-node-url" "--backfill" "--payload-builder"];
+              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--trusted-node-url" "--backfill" "--payload-builder" "--keymanager-token-file"];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
               filteredArgs = builtins.filter isNormalArg args;
             in ''
               ${network} ${jwtSecret} \
               ${web3Url} \
               ${dataDir} \
+              ${keymanagerTokenFile} \
               ${payloadBuilder} \
               ${concatStringsSep " \\\n" filteredArgs} \
               ${lib.escapeShellArgs cfg.extraArgs}
@@ -192,6 +198,9 @@ in {
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
                   LoadCredential = ["jwt-secret:${cfg.args.jwt-secret}"];
+                })
+                (mkIf (cfg.args.keymanager.token-file != null) {
+                  LoadCredential = ["keymanager-token-file:${cfg.args.keymanager.token-file}"];
                 })
               ];
             })

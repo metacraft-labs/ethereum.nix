@@ -135,4 +135,31 @@ with lib; {
       description = mdDoc "Payload builder URL.";
     };
   };
+
+  keymanager = {
+    enable = lib.mkEnableOption (mdDoc "Enable the REST keymanager API");
+    address = mkOption {
+      type = types.str;
+      default = "127.0.0.1";
+      description = mdDoc "Listening port for the REST keymanager API.";
+    };
+
+    port = mkOption {
+      type = types.port;
+      default = 5052;
+      description = mdDoc "Listening port for the REST keymanager API.";
+    };
+
+    allow-origin = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      description = mdDoc "Limit the access to the Keymanager API to a particular hostname (for CORS-enabled clients such as browsers).";
+    };
+
+    token-file = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = mdDoc "A file specifying the authorization token required for accessing the keymanager API.";
+    };
+  };
 }
