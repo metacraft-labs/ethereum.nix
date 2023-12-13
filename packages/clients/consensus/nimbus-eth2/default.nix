@@ -20,9 +20,10 @@
   ],
 }:
 # Nim version(s) that are known to be stable
+# See: https://github.com/status-im/nimbus-build-system/commits/master/vendor
 assert (
   lib.assertMsg
-  (nim.version == "1.6.12" || nim.version == "1.6.14")
+  (builtins.elem nim.version ["1.6.12" "1.6.14" "1.6.16" "1.6.18"])
   "Unsupported Nim version: ${nim.version}"
 );
   stdenv.mkDerivation rec {
