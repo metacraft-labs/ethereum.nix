@@ -22,7 +22,7 @@
 # Nim version(s) that are known to be stable
 assert (
   lib.assertMsg
-  (nim.version == "1.6.12" || nim.version == "1.6.14")
+  (builtins.elem nim.version ["1.6.12" "1.6.14" "v1.6.16"])
   "Unsupported Nim version: ${nim.version}"
 );
   stdenv.mkDerivation rec {

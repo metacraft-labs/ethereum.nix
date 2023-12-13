@@ -20,7 +20,13 @@
       lighthouse = callPackage ./clients/consensus/lighthouse {inherit foundry;};
       prysm = callPackage ./clients/consensus/prysm {inherit bls blst;};
       teku = callPackage ./clients/consensus/teku {};
-      nimbus-eth2 = callPackageUnstable ./clients/consensus/nimbus-eth2 {};
+      nimbus-eth2 = callPackageUnstable ./clients/consensus/nimbus-eth2 {
+        # For now the nimbus team prefers nim 1.6 over 2.0.
+        # In newer versions of `pkgsUnstable` `nim` points to v2.0.0 in older it is 1.6.
+        # In newer versions the `nim1` package exists but not in older.
+        # See: https://github.com/status-im/nimbus-build-system/commits/master/vendor
+        nim = pkgsUnstable.nim1 or pkgsUnstable.nim;
+      };
 
       # Execution Clients
       erigon = callPackage ./clients/execution/erigon {};
@@ -74,7 +80,7 @@
 
       # Solidity
       slither = callPackageUnstable ./solidity/analyzers/slither {};
-      wake = callPackageUnstable ./solidity/frameworks/wake { inherit poetry2nix; };
+      wake = callPackageUnstable ./solidity/frameworks/wake {inherit poetry2nix;};
 
       # Libs
       evmc = callPackage ./libs/evmc {};
