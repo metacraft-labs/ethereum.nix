@@ -200,4 +200,10 @@ with lib; {
     default = false;
     description = mdDoc "Enable the IPC-RPC server";
   };
+
+  snapshot = mkOption {
+    type = types.bool;
+    default = true;
+    description = mdDoc "Enables snapshot-database mode";
+  };
 }
