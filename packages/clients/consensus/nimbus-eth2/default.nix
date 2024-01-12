@@ -28,14 +28,14 @@ assert (
 );
   stdenv.mkDerivation rec {
     pname = "nimbus";
-    rev = "v23.10.1";
-    version = "23.10.1";
+    rev = "v24.1.1";
+    version = "24.1.1";
 
     src = fetchFromGitHub {
       owner = "status-im";
       repo = "nimbus-eth2";
       inherit rev;
-      hash = "sha256-+/AmkgXblg5Gf7VNbVz2uqAs+o2Bol9IIZS3i3t7r94=";
+      hash = "sha256-euKLjVw9f2AzdR9YF4UOIerpjWewTVTvaasXxNQgoq0=";
       fetchSubmodules = true;
     };
 
