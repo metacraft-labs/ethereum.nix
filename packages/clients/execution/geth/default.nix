@@ -13,22 +13,23 @@
     "devp2p"
     "ethkey"
     "evm"
+    "faucet"
     "geth"
     "rlpdump"
   ];
 in
   buildGoModule rec {
     pname = "geth";
-    version = "1.13.10";
+    version = "1.13.5";
 
     src = fetchFromGitHub {
       owner = "ethereum";
       repo = "go-ethereum";
       rev = "v${version}";
-      hash = "sha256-HFAf5fjYiRx6OEbqdtgaan8bqZPHazYKWG2Ty+WhNu8=";
+      hash = "sha256-UbRsY9fSUYAwPcLfGGDHeqvSsLKUKR+2a93jH5xA9uQ=";
     };
 
-    vendorHash = "sha256-w4WUDLzpr0VTwLK84/Yq4ia3Q1XhxDttzQ5RGg2FQGU=";
+    vendorHash = "sha256-dOvpOCMxxmcAaticSLVlro1L4crAVJWyvgx/JZZ7buE=";
 
     ldflags = ["-s" "-w"];
 
@@ -49,6 +50,7 @@ in
       "cmd/devp2p"
       "cmd/ethkey"
       "cmd/evm"
+      "cmd/faucet"
       "cmd/geth"
       "cmd/rlpdump"
       "cmd/utils"
