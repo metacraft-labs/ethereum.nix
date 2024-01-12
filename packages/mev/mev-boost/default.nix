@@ -11,10 +11,10 @@ buildGoModule rec {
     owner = "flashbots";
     repo = "${pname}";
     rev = "v${version}";
-    hash = "sha256-NmAOOwyWazJc2xJb9mfVLeuZubwdAIK7+NeFW+AHEEA=";
+    hash = "sha256-vzgX9irpI5i85bohppyL5KWQuf71SryRu1gkhWSCVKk=";
   };
 
-  vendorHash = "sha256-AIgFKav7D+MimRrhYv7EriQIKdml3nGu3sQ4j2fhEb4=";
+  vendorHash = "sha256-xw3xVbgKUIDXu4UQD5CGftON8E4o1u2FcrPo3n6APBE=";
 
   buildInputs = [blst];
 
