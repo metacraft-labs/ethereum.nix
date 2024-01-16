@@ -120,20 +120,20 @@ with lib; {
     influxdb = {
       enable = mkEnableOption (mdDoc "Enable metrics export/push to an external InfluxDB database");
       endpoint = mkOption {
-        type = types.str;
-        default = "http://127.0.0.1:8086";
+        type = types.nullOr types.str;
+        default = null;
         description = mdDoc "InfluxDB API endpoint to report metrics to.";
       };
 
       username = mkOption {
-        type = types.str;
-        default = "geth";
+        type = types.nullOr types.str;
+        default = null;
         description = mdDoc "Username to authorize access to the database.";
       };
 
       password = mkOption {
-        type = types.str;
-        default = "test";
+        type = types.nullOr types.str;
+        default = null;
         description = mdDoc "Password to authorize access to the database.";
       };
     };
