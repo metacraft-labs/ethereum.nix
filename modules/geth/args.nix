@@ -206,4 +206,12 @@ with lib; {
     default = true;
     description = mdDoc "Enables snapshot-database mode";
   };
+
+  discovery = {
+    port = mkOption {
+      type = types.port;
+      default = 30303;
+      description = mdDoc "Use a custom UDP port for P2P discovery.";
+    };
+  };
 }
