@@ -81,7 +81,6 @@ lib: let
     #   * ProtectHome = "read-only"
     DynamicUser = mkDefault true;
 
-    ProcSubset = mkDefault "pid";
     ProtectClock = mkDefault true;
     ProtectProc = mkDefault "noaccess";
     ProtectKernelLogs = mkDefault true;
