@@ -126,7 +126,6 @@ in {
               serviceConfig = mkMerge [
                 baseServiceConfig
                 {
-                  ProcSubset = "all";
                   User = serviceName;
                   StateDirectory = serviceName;
                   ExecStart = "${cfg.package}/bin/geth ${scriptArgs}";
