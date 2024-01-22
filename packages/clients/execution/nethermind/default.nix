@@ -12,13 +12,13 @@
 }: let
   self = buildDotnetModule rec {
     pname = "nethermind";
-    version = "1.19.3";
+    version = "1.25.1";
 
     src = fetchFromGitHub {
       owner = "NethermindEth";
       repo = pname;
       rev = version;
-      hash = "sha256-vqcgBT7kSyrgRl2hLehbCjsQ/AC4+a3LMOdAcmcNOFo=";
+      hash = "sha256-h46+cM20e5ztBSdimOR39tcNcG9/RU1NY/lS8Rwm9Xs=";
       fetchSubmodules = true;
     };
 
@@ -28,6 +28,9 @@
       stdenv.cc.cc.lib
       zstd
     ];
+
+    fakeGit = writeShellScriptBin "git" "echo ${version}";
+    nativeBuildInputs = [fakeGit];
 
     runtimeDeps = [
       rocksdb
@@ -42,12 +45,12 @@
     nugetDeps = ./nuget-deps.nix;
 
     executables = [
-      "Nethermind.Cli"
-      "Nethermind.Runner"
+      "nethermind-cli"
+      "nethermind"
     ];
 
-    dotnet-sdk = dotnetCorePackages.sdk_7_0;
-    dotnet-runtime = dotnetCorePackages.aspnetcore_7_0;
+    dotnet-sdk = dotnetCorePackages.sdk_8_0;
+    dotnet-runtime = dotnetCorePackages.aspnetcore_8_0;
 
     passthru = rec {
       # buildDotnetModule's `fetch-deps` uses `writeShellScript` instead of writeShellScriptBin making nix run .#nethermind.fetch-deps command to fail
@@ -60,7 +63,7 @@
       description = "Our flagship Ethereum client for Linux, Windows, and macOS—full and actively developed";
       homepage = "https://nethermind.io/nethermind-client";
       license = lib.licenses.gpl3;
-      mainProgram = "Nethermind.Runner";
+      mainProgram = "nethermind";
       platforms = ["x86_64-linux"];
     };
   };
