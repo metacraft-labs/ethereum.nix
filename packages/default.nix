@@ -44,7 +44,7 @@
       besu = callPackage ./clients/execution/besu {};
       geth = callPackage ./clients/execution/geth {};
       geth-sealer = callPackage ./clients/execution/geth-sealer {};
-      nethermind = callPackage ./clients/execution/nethermind {};
+      nethermind = callPackageUnstable ./clients/execution/nethermind {};
       reth = callPackageUnstable ./clients/execution/reth {};
 
       # Signers
