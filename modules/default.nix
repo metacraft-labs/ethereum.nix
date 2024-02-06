@@ -19,6 +19,7 @@
       ./prysm-validator
       ./restore
       ./nimbus-eth2
+      ./rocketpool-service
     ];
   };
 }
