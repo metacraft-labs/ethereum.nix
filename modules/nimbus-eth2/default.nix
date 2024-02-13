@@ -94,6 +94,11 @@ in {
               then ''--web3-url=${concatStringsSep " --web3-url=" cfg.args.web3-urls}''
               else "";
 
+            web3SignerUrls = lib.pipe cfg.args.web3-signer-url [
+              (builtins.map (x: "--web3-signer-url=${x}"))
+              (builtins.concatStringsSep " ")
+            ];
+
             payloadBuilder =
               if cfg.args.payload-builder.enable
               then "--payload-builder=true --payload-builder-url=${cfg.args.payload-builder.url}"
@@ -139,12 +144,13 @@ in {
                   inherit pathReducer;
                 };
               # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--trusted-node-url" "--backfill" "--payload-builder" "--keymanager-token-file"];
+              specialArgs = ["--network" "--jwt-secret" "--web3-urls" "--web3-signer-url" "--trusted-node-url" "--backfill" "--payload-builder" "--keymanager-token-file"];
               isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
               filteredArgs = builtins.filter isNormalArg args;
             in ''
               ${network} ${jwtSecret} \
               ${web3Url} \
+              ${web3SignerUrls} \
               ${dataDir} \
               ${keymanagerTokenFile} \
               ${payloadBuilder} \
