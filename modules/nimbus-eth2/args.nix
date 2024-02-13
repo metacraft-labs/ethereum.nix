@@ -107,9 +107,9 @@ with lib; {
   };
 
   web3-signer-url = mkOption {
-    type = types.nullOr types.str;
-    default = null;
-    example = "http://localhost:9000/";
+    type = types.listOf types.str;
+    default = [];
+    example = ["http://localhost:9000/"];
     description = mdDoc "Remote Web3Signer URL that will be used as a source of validators.";
   };
 
