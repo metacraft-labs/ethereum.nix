@@ -23,7 +23,7 @@
 # See: https://github.com/status-im/nimbus-build-system/commits/master/vendor
 assert (
   lib.assertMsg
-  (builtins.elem nim.version ["1.6.12" "1.6.14" "1.6.16" "1.6.18"])
+  (builtins.elem nim.version ["1.6.12" "1.6.14" "1.6.16" "1.6.18" "1.6.20"])
   "Unsupported Nim version: ${nim.version}"
 );
   stdenv.mkDerivation rec {
