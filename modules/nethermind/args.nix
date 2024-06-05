@@ -26,14 +26,7 @@ with lib; {
   };
 
   log = mkOption {
-    type = types.enum [
-      "OFF"
-      "TRACE"
-      "DEBUG"
-      "INFO"
-      "WARN"
-      "ERROR"
-    ];
+    type = types.enum ["OFF" "TRACE" "DEBUG" "INFO" "WARN" "ERROR" "\${LOG}"];
     default = "INFO";
     description = mdDoc "Changes the logging level.";
   };
