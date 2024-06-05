@@ -17,13 +17,13 @@ with lib; {
   };
 
   udp-port = mkOption {
-    type = types.port;
+    type = types.either types.port (types.enum ["\${UDP_PORT}"]);
     default = 12000;
     description = mdDoc "The port used by discv5.";
   };
 
   tcp-port = mkOption {
-    type = types.port;
+    type = types.either types.port (types.enum ["\${TCP_PORT}"]);
     default = 13000;
     description = mdDoc "The port used by libp2p.";
   };
@@ -69,7 +69,7 @@ with lib; {
       description = mdDoc "Metrics address for beacon node.";
     };
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${METRICS_PORT}"]);
       default = 8008;
       description = mdDoc "Metrics port for beacon node.";
     };
@@ -84,7 +84,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${REST_PORT}"]);
       default = 5052;
       description = mdDoc "Port for the REST API server.";
     };
@@ -152,7 +152,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${KEYMANAGER_PORT}"]);
       default = 5052;
       description = mdDoc "Listening port for the REST keymanager API.";
     };
