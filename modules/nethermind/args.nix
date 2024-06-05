@@ -48,13 +48,13 @@ with lib; {
     # https://docs.nethermind.io/nethermind/ethereum-client/configuration/network
     Network = {
       DiscoveryPort = mkOption {
-        type = types.port;
+        type = types.either types.port (types.enum ["\${DISCOVERY_PORT}"]);
         default = 30303;
         description = "UDP port number for incoming discovery connections.";
       };
 
       P2PPort = mkOption {
-        type = types.port;
+        type = types.either types.port (types.enum ["\${P2P_PORT}"]);
         default = 30303;
         description = "TPC/IP port number for incoming P2P connections.";
       };
@@ -69,13 +69,13 @@ with lib; {
       };
 
       Port = mkOption {
-        type = types.port;
+        type = types.either types.port (types.enum ["\${PORT}"]);
         default = 8545;
         description = "Port number for JSON RPC calls.";
       };
 
       WebSocketsPort = mkOption {
-        type = types.port;
+        type = types.either types.port (types.enum ["\${WEB_SOCKETS_PORT}"]);
         default = 8545;
         description = "Port number for JSON RPC web sockets calls.";
       };
@@ -87,7 +87,7 @@ with lib; {
       };
 
       EnginePort = mkOption {
-        type = types.port;
+        type = types.either types.port (types.enum ["\${ENGINE_PORT}"]);
         default = 8551;
         description = "Port for Execution Engine calls.";
       };
@@ -118,7 +118,7 @@ with lib; {
       };
 
       ExposePort = mkOption {
-        type = types.nullOr types.port;
+        type = types.nullOr (types.either types.port (types.enum ["\${METRICS_EXPOSE_PORT}"]));
         default = null;
         description = "If 'true' then Health Check endpoints is enabled at /health";
       };
