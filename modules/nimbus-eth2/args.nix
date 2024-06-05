@@ -92,7 +92,7 @@ with lib; {
 
   log = {
     level = mkOption {
-      type = types.enum ["trace" "debug" "info" "notice" "warn" "error" "fatal" "none"];
+      type = types.enum ["trace" "debug" "info" "notice" "warn" "error" "fatal" "none" "\${LOG_LEVEL}"];
       default = "info";
       example = "debug";
       description = mdDoc "Logging level.";
