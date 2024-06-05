@@ -1,7 +1,7 @@
 lib:
 with lib; {
   port = mkOption {
-    type = types.port;
+    type = types.either types.port (types.enum ["\${PORT}"]);
     default = 30303;
     description = mdDoc "Port number Go Ethereum will be listening on, both TCP and UDP.";
   };
@@ -16,7 +16,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${HTTP_PORT}"]);
       default = 8545;
       description = mdDoc "Port number of Go Ethereum HTTP API.";
     };
@@ -62,7 +62,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${WS_PORT}"]);
       default = 8546;
       description = mdDoc "Port number of Go Ethereum WebSocket API.";
     };
@@ -83,7 +83,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${AUTHRPC_PORT}"]);
       default = 8551;
       description = mdDoc "Port number of Go Ethereum Auth RPC API.";
     };
@@ -112,7 +112,7 @@ with lib; {
     };
 
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["METRICS_PORT"]);
       default = 6060;
       description = mdDoc "Port number of Go Ethereum metrics service.";
     };
@@ -215,7 +215,7 @@ with lib; {
 
   discovery = {
     port = mkOption {
-      type = types.port;
+      type = types.either types.port (types.enum ["\${DISCOVERY_PORT}"]);
       default = 30303;
       description = mdDoc "Use a custom UDP port for P2P discovery.";
     };
