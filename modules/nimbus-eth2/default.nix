@@ -163,12 +163,16 @@ in {
               ${trustedNodeUrl} \
               ${backfilling}'';
 
+            binaryName =
+              if cfg.args.network == "gnosis" || cfg.args.network == "chiado"
+              then "${cfg.package}/bin/nimbus_beacon_node_gnosis"
+              else "${cfg.package}/bin/nimbus_beacon_node";
+
             # When running trustedNodeSync after passing once, it gives an error
             # and doesn't continue to execute execStart. The problem occurs when
             # the service is restarted and execStartPre runs again. So we check
             # for the existence of a file in the folder, and that way we know if
             # Nimbus is running for the first time or not.
-
             trustedNodeSync =
               if cfg.args.trusted-node-url != null
               then let
@@ -181,7 +185,7 @@ in {
                   else
                     echo "starting trustedNodeSync";
                     set -x
-                    ${cfg.package}/bin/nimbus_beacon_node trustedNodeSync "$@"
+                    ${binaryName} trustedNodeSync "$@"
                   fi
                 '';
               in "${script} ${dataDirPath} ${dataDir} ${nodeSyncArgs}"
@@ -199,7 +203,7 @@ in {
                   User = serviceName;
                   StateDirectory = serviceName;
                   ExecStartPre = trustedNodeSync;
-                  ExecStart = ''${cfg.package}/bin/nimbus_beacon_node ${beaconNodeArgs}'';
+                  ExecStart = ''${binaryName} ${beaconNodeArgs}'';
                   MemoryDenyWriteExecute = "false"; # causes a library loading error
                 }
                 (mkIf (cfg.args.jwt-secret != null) {
