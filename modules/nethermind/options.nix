@@ -30,6 +30,22 @@
         description = lib.mdDoc "Open ports in the firewall for any enabled networking services";
       };
 
+      argsFromFile = {
+        enable = mkEnableOption (mdDoc "Create a file in the etc directory from which arguments can be modified");
+        group = mkOption {
+          type = types.str;
+          default = "";
+          example = "devops";
+          description = lib.mdDoc "Group which can modify the arguments file";
+        };
+        mode = mkOption {
+          type = types.str;
+          default = "0664";
+          example = "0060";
+          description = lib.mdDoc "Arguments file mode";
+        };
+      };
+
       # mixin backup options
       backup = let
         inherit (import ../backup/lib.nix lib) options;
