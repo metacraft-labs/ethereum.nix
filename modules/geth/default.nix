@@ -9,21 +9,19 @@
 }: let
   modulesLib = import ../lib.nix lib;
 
-  inherit (lib.lists) optionals findFirst;
-  inherit (lib.strings) hasPrefix;
+  serviceArgs =
+    lib.mapAttrs (
+      gethName: let
+        serviceName = "geth-${gethName}";
+      in
+        cfg: ((import ./service-args.nix {inherit lib pkgs;}).argsCreate serviceName cfg)
+    )
+    eachGeth;
+
+  inherit (lib.lists) optionals;
   inherit (lib.attrsets) zipAttrsWith;
-  inherit
-    (lib)
-    concatStringsSep
-    filterAttrs
-    flatten
-    mapAttrs'
-    mapAttrsToList
-    mkIf
-    mkMerge
-    nameValuePair
-    ;
-  inherit (modulesLib) mkArgs baseServiceConfig;
+  inherit (lib) filterAttrs flatten mapAttrs' mapAttrsToList mkIf mkMerge nameValuePair;
+  inherit (modulesLib) baseServiceConfig;
 
   # capture config for all configured geths
   eachGeth = config.services.ethereum.geth;
@@ -57,6 +55,21 @@ in {
     in
       zipAttrsWith (_name: flatten) perService;
 
+    environment = lib.mapAttrs' (gethName: cfg:
+      lib.nameValuePair "etc" {
+        "ethereum/geth-${gethName}-args" = let
+          argsFromFile = cfg.argsFromFile;
+        in
+          lib.mkIf argsFromFile.enable {
+            source = builtins.toFile "geth-${gethName}-args" ''
+              ARGS="${serviceArgs.${gethName}.scriptArgs}"
+            '';
+            group = argsFromFile.group;
+            mode = argsFromFile.mode;
+          };
+      })
+    eachGeth;
+
     # create a service for each instance
     systemd.services =
       mapAttrs'
@@ -65,52 +78,7 @@ in {
           serviceName = "geth-${gethName}";
         in
           cfg: let
-            scriptArgs = let
-              # replace enable flags like --http.enable with just --http
-              pathReducer = path: let
-                arg = concatStringsSep "." (lib.lists.remove "enable" path);
-              in "--${arg}";
-
-              # generate flags
-              args = let
-                opts = import ./args.nix lib;
-              in
-                mkArgs {
-                  inherit pathReducer opts;
-                  inherit (cfg) args;
-                };
-
-              # filter out certain args which need to be treated differently
-              specialArgs = ["--network" "--authrpc.jwtsecret" "--ipcEnable"];
-              isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
-
-              filteredArgs = builtins.filter isNormalArg args;
-
-              network =
-                if cfg.args.network != null
-                then "--${cfg.args.network}"
-                else "";
-
-              jwtSecret =
-                if cfg.args.authrpc.jwtsecret != null
-                then "--authrpc.jwtsecret %d/jwtsecret"
-                else "";
-
-              ipc =
-                if cfg.args.ipcEnable
-                then ""
-                else "--ipcdisable";
-
-              datadir =
-                if cfg.args.datadir != null
-                then "--datadir ${cfg.args.datadir}"
-                else "--datadir %S/${serviceName}";
-            in ''
-              ${ipc} ${network} ${jwtSecret} \
-              ${datadir} \
-              ${concatStringsSep " \\\n" filteredArgs} \
-              ${lib.escapeShellArgs cfg.extraArgs}
-            '';
+            inherit (serviceArgs."${gethName}") execStartCommand;
           in
             nameValuePair serviceName (mkIf cfg.enable {
               after = ["network.target"];
@@ -127,8 +95,9 @@ in {
                 baseServiceConfig
                 {
                   User = serviceName;
+                  EnvironmentFile = lib.mkIf cfg.argsFromFile.enable "/etc/ethereum/geth-${gethName}-args";
                   StateDirectory = serviceName;
-                  ExecStart = "${cfg.package}/bin/geth ${scriptArgs}";
+                  ExecStart = execStartCommand;
                 }
                 (mkIf (cfg.args.authrpc.jwtsecret != null) {
                   LoadCredential = ["jwtsecret:${cfg.args.authrpc.jwtsecret}"];
