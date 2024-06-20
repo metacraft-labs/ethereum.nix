@@ -4,31 +4,20 @@
   pkgs,
   ...
 }: let
-  inherit
-    (builtins)
-    isBool
-    isList
-    toString
-    ;
-  inherit
-    (lib)
-    boolToString
-    concatStringsSep
-    filterAttrs
-    findFirst
-    flatten
-    hasPrefix
-    mapAttrs'
-    mapAttrsToList
-    mkIf
-    mkMerge
-    nameValuePair
-    optionals
-    zipAttrsWith
-    ;
+  serviceArgs =
+    lib.mapAttrs (
+      nethermindName: let
+        serviceName = "nethermind-${nethermindName}";
+      in
+        cfg: ((import ./service-args.nix {inherit lib pkgs;}).argsCreate serviceName cfg)
+    )
+    eachNethermind;
+
+  inherit (builtins) toString;
+  inherit (lib) filterAttrs flatten mapAttrs' mapAttrsToList mkIf mkMerge nameValuePair optionals zipAttrsWith;
 
   modulesLib = import ../lib.nix lib;
-  inherit (modulesLib) mkArgs baseServiceConfig;
+  inherit (modulesLib) baseServiceConfig;
 
   # capture config for all configured netherminds
   eachNethermind = config.services.ethereum.nethermind;
@@ -58,6 +47,21 @@ in {
     in
       zipAttrsWith (_name: flatten) perService;
 
+    environment = lib.mapAttrs' (nethermindName: cfg:
+      lib.nameValuePair "etc" {
+        "ethereum/nethermind-${nethermindName}-args" = let
+          argsFromFile = cfg.argsFromFile;
+        in
+          lib.mkIf argsFromFile.enable {
+            source = builtins.toFile "nethermind-${nethermindName}-args" ''
+              ARGS="${serviceArgs.${nethermindName}.scriptArgs}"
+            '';
+            group = argsFromFile.group;
+            mode = argsFromFile.mode;
+          };
+      })
+    eachNethermind;
+
     # create a service for each instance
     systemd.services =
       mapAttrs' (
@@ -65,60 +69,7 @@ in {
           serviceName = "nethermind-${nethermindName}";
         in
           cfg: let
-            scriptArgs = let
-              # custom arg reducer for nethermind
-              argReducer = value:
-                if (isList value)
-                then concatStringsSep "," value
-                else if (isBool value)
-                then boolToString value
-                else toString value;
-
-              # remove modules from arguments
-              pathReducer = path: let
-                arg = concatStringsSep "." (lib.lists.remove "modules" path);
-              in "--${arg}";
-
-              # custom arg formatter for nethermind
-              argFormatter = {
-                path,
-                value,
-                argReducer,
-                pathReducer,
-                ...
-              }: let
-                arg = pathReducer path;
-              in "${arg} ${argReducer value}";
-
-              jwtSecret =
-                if cfg.args.modules.JsonRpc.JwtSecretFile != null
-                then "--JsonRpc.JwtSecretFile %d/jwtsecret"
-                else "";
-              datadir =
-                if cfg.args.datadir != null
-                then "--datadir ${cfg.args.datadir}"
-                else "--datadir %S/${serviceName}";
-
-              # generate flags
-              args = let
-                opts = import ./args.nix lib;
-              in
-                mkArgs {
-                  inherit pathReducer argReducer argFormatter opts;
-                  inherit (cfg) args;
-                };
-
-              # filter out certain args which need to be treated differently
-              specialArgs = ["--JsonRpc.JwtSecretFile"];
-              isNormalArg = name: (findFirst (arg: hasPrefix arg name) null specialArgs) == null;
-
-              filteredArgs = builtins.filter isNormalArg args;
-            in ''
-              ${datadir} \
-              ${jwtSecret} \
-              ${concatStringsSep " \\\n" filteredArgs} \
-              ${lib.escapeShellArgs cfg.extraArgs}
-            '';
+            inherit (serviceArgs."${nethermindName}") execStartCommand;
           in
             nameValuePair serviceName (mkIf cfg.enable {
               after = ["network.target"];
@@ -135,8 +86,9 @@ in {
                 baseServiceConfig
                 {
                   User = serviceName;
+                  EnvironmentFile = lib.mkIf cfg.argsFromFile.enable "/etc/ethereum/nethermind-${nethermindName}-args";
                   StateDirectory = serviceName;
-                  ExecStart = "${cfg.package}/bin/nethermind ${scriptArgs}";
+                  ExecStart = execStartCommand;
 
                   MemoryDenyWriteExecute = false;
                 }
