@@ -10,7 +10,7 @@
     # packages
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
     nixpkgs-2311.url = "github:nixos/nixpkgs/23.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs?branch=nixpkgs-unstable&rev=99dc8785f6a0adac95f5e2ab05cc2e1bf666d172";
 
     foundry-nix = {
       url = "github:shazow/foundry.nix/monthly";
