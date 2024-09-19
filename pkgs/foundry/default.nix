@@ -15,13 +15,11 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "foundry-rs";
     repo = "foundry";
-    rev = "8a08a3a92b0c842db2f254983cc3bd179300ad46";
-    hash = "sha256-djEWWltp+5DErOsADmcF/NlCNslAfDMMhLmFSm0HbBM=";
+    rev = "fec2064cadd443fef491c9d02461e1a5f455232f";
+    hash = "sha256-k1lRKylFhM96d1/eQ9rMQA0vb4DNW5wYo8mX7TnK43Q=";
   };
 
-  cargoLock = {
-    lockFile = "${src}/Cargo.lock";
-  };
+  cargoHash = "sha256-ImBX/IJ6F6Xs/2K/8huvLkIMuZYzpfW6AWhE0lqQw2w=";
 
   env = {
     # Make svm-rs use local release list rather than fetching from non-reproducible URL.
@@ -63,10 +61,11 @@ rustPlatform.buildRustPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "A portable, modular toolkit for Ethereum application development written in Rust.";
-    homepage = "https://github.com/foundry-rs/foundry";
+    description = "Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust";
+    homepage = "https://github.com/foundry-rs/foundry/";
     license = with licenses; [asl20 mit];
     maintainers = with maintainers; [mitchmindtree];
+    mainProgram = "foundry";
     # For now, solc binaries are only built for x86_64.
     # Track darwin-aarch64 here:
     # https://github.com/ethereum/solidity/issues/12291
