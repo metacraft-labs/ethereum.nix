@@ -63,10 +63,11 @@ rustPlatform.buildRustPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "A portable, modular toolkit for Ethereum application development written in Rust.";
-    homepage = "https://github.com/foundry-rs/foundry";
+    description = "Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust";
+    homepage = "https://github.com/foundry-rs/foundry/";
     license = with licenses; [asl20 mit];
     maintainers = with maintainers; [mitchmindtree];
+    mainProgram = "foundry";
     # For now, solc binaries are only built for x86_64.
     # Track darwin-aarch64 here:
     # https://github.com/ethereum/solidity/issues/12291
