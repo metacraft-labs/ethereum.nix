@@ -10,24 +10,16 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "foundry";
-  version = "nightly-${builtins.substring 0 7 src.rev}";
+  version = "2acca4e379793539db80e032d76ffe0110298b";
 
   src = fetchFromGitHub {
     owner = "foundry-rs";
     repo = "foundry";
-    rev = "0688b5ad19a637303c038d1a66aec62a73713e20";
-    hash = "sha256-OIsUzJVNcb2nVCYU/BdGGGICEg9Cr9LXc8zzN2JSb8g=";
+    rev = "nightly-fe${version}";
+    hash = "sha256-saC0XF4iBNXn9BxYlt1e8WB4t3NXptEFaREKgFsPMs0=";
   };
 
-  cargoLock = {
-    lockFile = "${src}/Cargo.lock";
-    outputHashes = {
-      "alloy-consensus-0.1.0" = "sha256-rHDLt0N6VIAlg2EKEdF0S2S8XqJebRlIB7owyGQ04aA=";
-      "ethers-2.0.11" = "sha256-ySrCZOiqOcDVH5T7gbimK6Bu7A2OCcU64ZL1RfFPrBc=";
-      "revm-3.5.0" = "sha256-gdDJq2ZyIkMhTgMNz45YJXnopF/xxt3CaSd/eYSDGcY=";
-      "revm-inspectors-0.1.0" = "sha256-mH6On3cjKLT14S+5dxB1G5lcf5PBtz0KcusMxOtRRWA=";
-    };
-  };
+  cargoHash = "sha256-nfuyl36awAlDnqQmSjKXE/yQ99Asl357S0i8Zn+0WAA=";
 
   env = {
     # Make svm-rs use local release list rather than fetching from non-reproducible URL.
@@ -69,10 +61,11 @@ rustPlatform.buildRustPackage rec {
   doCheck = false;
 
   meta = with lib; {
-    description = "A portable, modular toolkit for Ethereum application development written in Rust.";
-    homepage = "https://github.com/foundry-rs/foundry";
+    description = "Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust";
+    homepage = "https://github.com/foundry-rs/foundry/";
     license = with licenses; [asl20 mit];
     maintainers = with maintainers; [mitchmindtree];
+    mainProgram = "foundry";
     # For now, solc binaries are only built for x86_64.
     # Track darwin-aarch64 here:
     # https://github.com/ethereum/solidity/issues/12291
