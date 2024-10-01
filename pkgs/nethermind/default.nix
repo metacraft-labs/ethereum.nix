@@ -12,14 +12,13 @@
 }: let
   self = buildDotnetModule rec {
     pname = "nethermind";
-    version = "1.25.4";
+    version = "1.28.0";
 
     src = fetchFromGitHub {
       owner = "NethermindEth";
       repo = pname;
       rev = version;
-      hash = "sha256-J0kvmj6yG7tUv16nDfQ14mmKnGgJ/Gshkf8wCFRs1B0=";
-      fetchSubmodules = true;
+      hash = "sha256-kiWx2Jd5tzXnbUGhPJ7FM4BAj9O7bnNQtDFrKG3NcpI=";
     };
 
     buildInputs = [
@@ -34,9 +33,9 @@
       snappy
     ];
 
-    patches = [
-      ./001-Remove-Commit-Fallback.patch
-    ];
+    # patches = [
+    #   ./001-Remove-Commit-Fallback.patch
+    # ];
 
     projectFile = "src/Nethermind/Nethermind.sln";
     nugetDeps = ./nuget-deps.nix;
@@ -46,7 +45,7 @@
       "nethermind"
     ];
 
-    dotnet-sdk = dotnetCorePackages.sdk_8_0;
+    dotnet-sdk = dotnetCorePackages.sdk_8_0_1xx;
     dotnet-runtime = dotnetCorePackages.aspnetcore_8_0;
 
     passthru = {
@@ -57,9 +56,9 @@
     };
 
     meta = {
-      description = "Our flagship Ethereum client for Linux, Windows, and macOS—full and actively developed";
-      homepage = "https://nethermind.io/nethermind-client";
-      license = lib.licenses.gpl3;
+      description = "A robust execution client for Ethereum node operators";
+      homepage = "https://www.nethermind.io/nethermind-client";
+      license = lib.licenses.gpl3Only;
       mainProgram = "Nethermind.Runner";
       platforms = ["x86_64-linux"];
     };
