@@ -8,7 +8,7 @@
 
   serviceArgs =
     lib.mapAttrs (
-      beaconName: let
+      _beaconName: let
         serviceName = "nimbus-eth2";
       in
         cfg: ((import ./service-args.nix {inherit lib pkgs;}).argsCreate serviceName cfg)
@@ -30,7 +30,7 @@ in {
     assertions =
       mapAttrsToList
       (
-        name: cfg: {
+        _name: cfg: {
           assertion = cfg.args.payload-builder.enable -> cfg.args.payload-builder.url != null;
           message = "services.ethereum.nimbus-eth2.payload-builder must have `url` specified, if enabled";
         }
@@ -56,14 +56,14 @@ in {
     environment = lib.mapAttrs' (beaconName: cfg:
       lib.nameValuePair "etc" {
         "ethereum/nimbus-${beaconName}-args" = let
-          argsFromFile = cfg.argsFromFile;
+          inherit (cfg) argsFromFile;
         in
           lib.mkIf argsFromFile.enable {
             source = builtins.toFile "nimbus-${beaconName}-args" ''
               ARGS="${serviceArgs.${beaconName}.beaconNodeArgs}"
             '';
-            group = argsFromFile.group;
-            mode = argsFromFile.mode;
+            inherit (argsFromFile) group;
+            inherit (argsFromFile) mode;
           };
       })
     eachBeacon;

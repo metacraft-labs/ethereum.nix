@@ -46,10 +46,12 @@
     };
     lib-extras = {
       url = "github:aldoborrero/lib-extras/v0.2.2";
-      inputs.devshell.follows = "devshell";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs = {
+        devshell.follows = "devshell";
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+        treefmt-nix.follows = "treefmt-nix";
+      };
     };
   };
 

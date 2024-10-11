@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{lib, ...}: let
   modulesLib = import ../lib.nix lib;
 
   inherit (lib.lists) findFirst;
