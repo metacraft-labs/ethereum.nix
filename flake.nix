@@ -53,6 +53,10 @@
         treefmt-nix.follows = "treefmt-nix";
       };
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs @ {
