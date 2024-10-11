@@ -70,6 +70,6 @@ rustPlatform.buildRustPackage rec {
     # For now, solc binaries are only built for x86_64.
     # Track darwin-aarch64 here:
     # https://github.com/ethereum/solidity/issues/12291
-    platforms = ["x86_64-linux" "x86_64-darwin"];
+    platforms = ["x86_64-linux" "x86_64-darwin" "aarch64-darwin"];
   };
 }
