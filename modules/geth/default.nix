@@ -58,14 +58,14 @@ in {
     environment = lib.mapAttrs' (gethName: cfg:
       lib.nameValuePair "etc" {
         "ethereum/geth-${gethName}-args" = let
-          argsFromFile = cfg.argsFromFile;
+          inherit (cfg) argsFromFile;
         in
           lib.mkIf argsFromFile.enable {
             source = builtins.toFile "geth-${gethName}-args" ''
               ARGS="${serviceArgs.${gethName}.scriptArgs}"
             '';
-            group = argsFromFile.group;
-            mode = argsFromFile.mode;
+            inherit (argsFromFile) group;
+            inherit (argsFromFile) mode;
           };
       })
     eachGeth;

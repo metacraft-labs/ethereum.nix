@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
+{lib, ...}: let
   modulesLib = import ../lib.nix lib;
   inherit (builtins) isBool isList toString;
   inherit (lib) boolToString concatStringsSep findFirst hasPrefix;
