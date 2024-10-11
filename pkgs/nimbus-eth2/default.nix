@@ -10,14 +10,14 @@
   # Options: nimbus_light_client, nimbus_validator_client, nimbus_signing_node
   makeTargets ? ["all"],
   # These are the only platforms tested in CI and considered stable.
-  stablePlatforms ? [
-    "x86_64-linux"
-    "aarch64-linux"
-    "armv7a-linux"
-    "x86_64-darwin"
-    "aarch64-darwin"
-    "x86_64-windows"
-  ],
+  # stablePlatforms ? [
+  #   "x86_64-linux"
+  #   "aarch64-linux"
+  #   "armv7a-linux"
+  #   "x86_64-darwin"
+  #   "aarch64-darwin"
+  #   "x86_64-windows"
+  # ],
 }:
 # Nim version(s) that are known to be stable
 # See: https://github.com/status-im/nimbus-build-system/commits/master/vendor
@@ -79,6 +79,7 @@ assert (
       '';
       license = with licenses; [asl20 mit];
       mainProgram = "nimbus_beacon_node";
-      platforms = stablePlatforms;
+      # platforms = stablePlatforms;
+      platforms = ["x86_64-linux"];
     };
   }
