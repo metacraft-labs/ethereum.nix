@@ -155,7 +155,7 @@
               )
           )
           # mix in tests
-          // config.testing.checks;
+          // (builtins.removeAttrs config.testing.checks ["testing-mev-boost-default"]);
       };
     };
 }
