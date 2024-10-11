@@ -50,14 +50,14 @@ in {
     environment = lib.mapAttrs' (nethermindName: cfg:
       lib.nameValuePair "etc" {
         "ethereum/nethermind-${nethermindName}-args" = let
-          argsFromFile = cfg.argsFromFile;
+          inherit (cfg) argsFromFile;
         in
           lib.mkIf argsFromFile.enable {
             source = builtins.toFile "nethermind-${nethermindName}-args" ''
               ARGS="${serviceArgs.${nethermindName}.scriptArgs}"
             '';
-            group = argsFromFile.group;
-            mode = argsFromFile.mode;
+            inherit (argsFromFile) group;
+            inherit (argsFromFile) mode;
           };
       })
     eachNethermind;
