@@ -32,7 +32,6 @@
     systems.url = "github:nix-systems/default";
     devshell = {
       url = "github:numtide/devshell";
-      inputs.flake-utils.follows = "flake-utils";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     treefmt-nix = {
