@@ -14,6 +14,7 @@
 
   perSystem = {
     self',
+    inputs',
     pkgs,
     pkgsUnstable,
     pkgs2311,
@@ -24,6 +25,13 @@
     inherit (lib.extras.flakes) platformPkgs platformApps;
     callPackageUnstable = pkgsUnstable.callPackage;
     callPackage2311 = pkgs2311.callPackage;
+
+    rustToolchain = inputs'.fenix.packages.minimal.toolchain;
+
+    rustPlatform = pkgsUnstable.makeRustPlatform {
+      cargo = rustToolchain;
+      rustc = rustToolchain;
+    };
   in {
     packages = platformPkgs system rec {
       besu = callPackageUnstable ./besu {};
@@ -44,7 +52,7 @@
       ethdo = callPackage ./ethdo {inherit bls mcl;};
       ethereal = callPackage ./ethereal {inherit bls mcl;};
       evmc = callPackage ./evmc {};
-      foundry = callPackageUnstable ./foundry {};
+      foundry = callPackageUnstable ./foundry {inherit rustPlatform;};
       foundry-bin = inputs.foundry-nix.defaultPackage.${system}.overrideAttrs (_oldAttrs: {
         # TODO: Uncomment when https://github.com/shazow/foundry.nix/issues/23
         # meta.platforms = [system];
