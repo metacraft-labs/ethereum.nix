@@ -18,6 +18,7 @@
     pkgs,
     pkgsUnstable,
     pkgs2311,
+    pkgsNethermind,
     system,
     ...
   }: let
@@ -25,6 +26,7 @@
     inherit (lib.extras.flakes) platformPkgs platformApps;
     callPackageUnstable = pkgsUnstable.callPackage;
     callPackage2311 = pkgs2311.callPackage;
+    callPackageNethermind = pkgsNethermind.callPackage;
 
     rustToolchain = inputs'.fenix.packages.minimal.toolchain;
 
@@ -67,7 +69,7 @@
       mev-boost-builder = callPackage ./mev-boost-builder {inherit blst;};
       mev-boost-relay = callPackage ./mev-boost-relay {inherit blst;};
       mev-rs = callPackage ./mev-rs {};
-      nethermind = callPackageUnstable ./nethermind {};
+      nethermind = callPackageNethermind ./nethermind {};
       nimbus = callPackageUnstable ./nimbus {};
       nimbus-eth2 = callPackageUnstable ./nimbus-eth2 {
         # For now the nimbus team prefers nim 1.6 over 2.0.

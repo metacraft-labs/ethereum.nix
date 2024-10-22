@@ -214,6 +214,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-nethermind": {
+      "locked": {
+        "lastModified": 1719317636,
+        "narHash": "sha256-bu0xbu2Z6DDzA9LGV81yJunIti6r7tjUImeR8orAL/I=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9c513fc6fb75142f6aec6b7545cb8af2236b80f5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "9c513fc6fb75142f6aec6b7545cb8af2236b80f5",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1738644632,
@@ -242,6 +258,7 @@
         "lib-extras": "lib-extras",
         "nixpkgs": "nixpkgs",
         "nixpkgs-2311": "nixpkgs-2311",
+        "nixpkgs-nethermind": "nixpkgs-nethermind",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "systems": "systems",
         "treefmt-nix": "treefmt-nix"
