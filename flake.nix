@@ -11,6 +11,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/24.05";
     nixpkgs-2311.url = "github:nixos/nixpkgs/23.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs-nethermind.url = "github:nixos/nixpkgs?rev=9c513fc6fb75142f6aec6b7545cb8af2236b80f5";
 
     foundry-nix = {
       url = "github:shazow/foundry.nix/monthly";
@@ -104,6 +105,10 @@
           pkgs2311 = lib.extras.nix.mkNixpkgs {
             inherit system;
             nixpkgs = inputs.nixpkgs-2311;
+          };
+          pkgsNethermind = lib.extras.nix.mkNixpkgs {
+            inherit system;
+            nixpkgs = inputs.nixpkgs-nethermind;
           };
         };
 
