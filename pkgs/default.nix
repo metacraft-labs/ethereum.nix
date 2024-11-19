@@ -26,7 +26,7 @@
     callPackageUnstable = pkgsUnstable.callPackage;
     callPackage2311 = pkgs2311.callPackage;
 
-    rustToolchain = inputs'.fenix.packages.minimal.toolchain;
+    rustToolchain = inputs'.fenix.packages.stable.toolchain;
 
     rustPlatform = pkgsUnstable.makeRustPlatform {
       cargo = rustToolchain;
