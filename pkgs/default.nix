@@ -28,7 +28,7 @@
     callPackage2311 = pkgs2311.callPackage;
     callPackageNethermind = pkgsNethermind.callPackage;
 
-    rustToolchain = inputs'.fenix.packages.minimal.toolchain;
+    rustToolchain = inputs'.fenix.packages.stable.toolchain;
 
     rustPlatform = pkgsUnstable.makeRustPlatform {
       cargo = rustToolchain;
