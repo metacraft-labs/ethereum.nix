@@ -12,5 +12,8 @@ on:
 
 jobs:
   ci:
-    uses: metacraft-labs/nixos-modules/.github/workflows/ci.yml@main
-    secrets: inherit
+    uses: metacraft-labs/nixos-modules/.github/workflows/reusable-flake-checks-ci-matrix.yml@main
+    secrets:
+      CACHIX_AUTH_TOKEN: ${{ secrets.CACHIX_AUTH_TOKEN }}
+    with:
+      runner: '["self-hosted", "nixos", "x86-64-v2"]'
