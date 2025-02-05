@@ -25,7 +25,10 @@ with lib; {
       type = types.nullOr (types.listOf types.str);
       default = null;
       description = "API's offered over the HTTP-RPC interface";
-      example = ["net" "eth"];
+      example = [
+        "net"
+        "eth"
+      ];
     };
 
     corsdomain = mkOption {
@@ -49,7 +52,10 @@ with lib; {
         Comma separated list of virtual hostnames from which to accept requests (server enforced).
         Accepts '*' wildcard.
       '';
-      example = ["localhost" "geth.example.org"];
+      example = [
+        "localhost"
+        "geth.example.org"
+      ];
     };
   };
 
@@ -71,7 +77,10 @@ with lib; {
       type = types.nullOr (types.listOf types.str);
       default = null;
       description = "APIs to enable over WebSocket";
-      example = ["net" "eth"];
+      example = [
+        "net"
+        "eth"
+      ];
     };
   };
 
@@ -92,7 +101,10 @@ with lib; {
       type = types.listOf types.str;
       default = ["localhost"];
       description = "List of virtual hostnames from which to accept requests.";
-      example = ["localhost" "geth.example.org"];
+      example = [
+        "localhost"
+        "geth.example.org"
+      ];
     };
 
     jwtsecret = mkOption {
@@ -118,29 +130,38 @@ with lib; {
     };
 
     influxdb = {
-      enable = mkEnableOption (mdDoc "Enable metrics export/push to an external InfluxDB database");
+      enable = mkEnableOption "Enable metrics export/push to an external InfluxDB database";
       endpoint = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "InfluxDB API endpoint to report metrics to.";
+        description = "InfluxDB API endpoint to report metrics to.";
       };
 
       username = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "Username to authorize access to the database.";
+        description = "Username to authorize access to the database.";
       };
 
       password = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "Password to authorize access to the database.";
+        description = "Password to authorize access to the database.";
       };
     };
   };
 
   network = mkOption {
-    type = types.nullOr (types.enum ["goerli" "holesky" "kiln" "rinkeby" "ropsten" "sepolia"]);
+    type = types.nullOr (
+      types.enum [
+        "goerli"
+        "holesky"
+        "kiln"
+        "rinkeby"
+        "ropsten"
+        "sepolia"
+      ]
+    );
     default = null;
     description = "The network to connect to. Mainnet (null) is the default ethereum network.";
   };
@@ -178,13 +199,21 @@ with lib; {
   };
 
   syncmode = mkOption {
-    type = types.enum ["snap" "fast" "full" "light"];
+    type = types.enum [
+      "snap"
+      "fast"
+      "full"
+      "light"
+    ];
     default = "snap";
     description = "Blockchain sync mode.";
   };
 
   gcmode = mkOption {
-    type = types.enum ["full" "archive"];
+    type = types.enum [
+      "full"
+      "archive"
+    ];
     default = "full";
     description = "Blockchain garbage collection mode.";
   };
@@ -204,20 +233,20 @@ with lib; {
   ipcEnable = mkOption {
     type = types.bool;
     default = false;
-    description = mdDoc "Enable the IPC-RPC server";
+    description = "Enable the IPC-RPC server";
   };
 
   snapshot = mkOption {
     type = types.bool;
     default = true;
-    description = mdDoc "Enables snapshot-database mode";
+    description = "Enables snapshot-database mode";
   };
 
   discovery = {
     port = mkOption {
       type = types.either types.port (types.enum ["\${DISCOVERY_PORT}"]);
       default = 30303;
-      description = mdDoc "Use a custom UDP port for P2P discovery.";
+      description = "Use a custom UDP port for P2P discovery.";
     };
   };
 }

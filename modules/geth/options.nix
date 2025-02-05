@@ -31,18 +31,18 @@
       };
 
       argsFromFile = {
-        enable = mkEnableOption (mdDoc "Create a file in the etc directory from which arguments can be modified");
+        enable = mkEnableOption "Create a file in the etc directory from which arguments can be modified";
         group = mkOption {
           type = types.str;
           default = "";
           example = "devops";
-          description = lib.mdDoc "Group which can modify the arguments file";
+          description = "Group which can modify the arguments file";
         };
         mode = mkOption {
           type = types.str;
           default = "0664";
           example = "0060";
-          description = lib.mdDoc "Arguments file mode";
+          description = "Arguments file mode";
         };
       };
 
