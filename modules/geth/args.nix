@@ -118,23 +118,23 @@ with lib; {
     };
 
     influxdb = {
-      enable = mkEnableOption (mdDoc "Enable metrics export/push to an external InfluxDB database");
+      enable = mkEnableOption "Enable metrics export/push to an external InfluxDB database";
       endpoint = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "InfluxDB API endpoint to report metrics to.";
+        description = "InfluxDB API endpoint to report metrics to.";
       };
 
       username = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "Username to authorize access to the database.";
+        description = "Username to authorize access to the database.";
       };
 
       password = mkOption {
         type = types.nullOr types.str;
         default = null;
-        description = mdDoc "Password to authorize access to the database.";
+        description = "Password to authorize access to the database.";
       };
     };
   };
@@ -204,20 +204,20 @@ with lib; {
   ipcEnable = mkOption {
     type = types.bool;
     default = false;
-    description = mdDoc "Enable the IPC-RPC server";
+    description = "Enable the IPC-RPC server";
   };
 
   snapshot = mkOption {
     type = types.bool;
     default = true;
-    description = mdDoc "Enables snapshot-database mode";
+    description = "Enables snapshot-database mode";
   };
 
   discovery = {
     port = mkOption {
       type = types.either types.port (types.enum ["\${DISCOVERY_PORT}"]);
       default = 30303;
-      description = mdDoc "Use a custom UDP port for P2P discovery.";
+      description = "Use a custom UDP port for P2P discovery.";
     };
   };
 }
