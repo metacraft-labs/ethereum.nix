@@ -20,16 +20,16 @@
 in
   buildGoModule rec {
     pname = "geth";
-    version = "1.15.0";
+    version = "1.15.2";
     src = fetchFromGitHub {
       owner = "ethereum";
       repo = "go-ethereum";
       rev = "v${version}";
-      hash = "sha256-qfk9G3/wzeh8Nf7BG4Qv6It/bY1ZYoYyHsgoqgCyd6E=";
+      hash = "sha256-eaUkPl8vQzvotYfZcnuBwphSfO33RPjWOYhyNNvXli4=";
     };
 
     proxyVendor = true;
-    vendorHash = "sha256-gTwmtrdj3+Pa4UxaUuhwk2Dtgur82Tbd0ict1cgVinw=";
+    vendorHash = "sha256-cfBTSroeDb/htGzIWG8c9Jty+Qo0TrQBrnyYy/Yo2C4=";
 
     ldflags = ["-s" "-w"];
 
