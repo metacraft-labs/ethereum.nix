@@ -4,12 +4,12 @@
   targets ? ["nimbus_beacon_node" "nimbus_validator_client" "gnosis-build" "gnosis-vc-build"],
   stableSystems ? ["x86_64-linux" "aarch64-linux"],
 }: let
-  version = "25.1.0";
+  version = "25.2.0";
   src = fetchFromGitHub {
     owner = "status-im";
     repo = "nimbus-eth2";
     rev = "v${version}";
-    hash = "sha256-kTpEN4bw/Pp2J4FEfHOEUMwBbEybVp7nhie4P3IHAnY=";
+    hash = "sha256-aPyfbQ1983jaWL2XI0yyLHXYegIPT7ugPbFfid5pkfo=";
     fetchSubmodules = true;
   };
 in
