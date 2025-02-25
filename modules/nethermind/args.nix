@@ -122,5 +122,14 @@ with lib; {
         description = "If 'true' then Health Check endpoints is enabled at /health";
       };
     };
+
+    # https://docs.nethermind.io/fundamentals/configuration/#sync
+    Sync = {
+      FastSync = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to use the Fast sync mode (the eth/63 synchronization algorithm).";
+      };
+    };
   };
 }
