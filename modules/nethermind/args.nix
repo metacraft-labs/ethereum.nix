@@ -130,6 +130,12 @@ with lib; {
         default = true;
         description = "Whether to use the Fast sync mode (the eth/63 synchronization algorithm).";
       };
+
+      SnapSync = mkOption {
+        type = types.bool;
+        default = true;
+        description = "Whether to use the Snap sync mode.";
+      };
     };
   };
 }
