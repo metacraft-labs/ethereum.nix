@@ -160,6 +160,7 @@ with lib; {
         "rinkeby"
         "ropsten"
         "sepolia"
+        "hoodi"
       ]
     );
     default = null;
