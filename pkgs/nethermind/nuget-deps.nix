@@ -266,8 +266,8 @@
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.App.Runtime.linux-x64";
-    version = "9.0.0";
-    hash = "sha256-4VhYI4XJ0XyKlRju6r/8wvf9xfJGtBcdadAv8Cr/OcY=";
+    version = "9.0.2";
+    hash = "sha256-aen2v5TY3eRh4FZcxZHQgwe3l20Z5egHEqDnoTut00M=";
   })
   (fetchNuGet {
     pname = "Microsoft.AspNetCore.Cryptography.Internal";
@@ -353,11 +353,6 @@
     pname = "Microsoft.CodeAnalysis.Analyzers";
     version = "3.3.3";
     hash = "sha256-pkZiggwLw8k+CVSXKTzsVGsT+K49LxXUS3VH5PNlpCY=";
-  })
-  (fetchNuGet {
-    pname = "Microsoft.CodeAnalysis.Analyzers";
-    version = "3.3.4";
-    hash = "sha256-qDzTfZBSCvAUu9gzq2k+LOvh6/eRvJ9++VCNck/ZpnE=";
   })
   (fetchNuGet {
     pname = "Microsoft.CodeAnalysis.Common";
@@ -846,8 +841,8 @@
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.App.Runtime.linux-x64";
-    version = "9.0.0";
-    hash = "sha256-jfCFsvpF16NHB2zmwenOJgP7vx0gzx3KhszaxZE/KCk=";
+    version = "9.0.2";
+    hash = "sha256-u0/nrznoWiCkmN8U4JapclZOxdPTZz3AQxLaXQkHzr0=";
   })
   (fetchNuGet {
     pname = "Microsoft.NETCore.DotNetHost";
@@ -971,8 +966,8 @@
   })
   (fetchNuGet {
     pname = "Nethermind.Crypto.Bls";
-    version = "1.0.4";
-    hash = "sha256-gd8Z89j7FkemjxAgwH2SZC5rwBA8BJNsUBVBYf4KhUg=";
+    version = "1.0.5";
+    hash = "sha256-EI8JsiEKw+laRhA3n+PFivJtAcyfGZJ+dIuBlqpdiKw=";
   })
   (fetchNuGet {
     pname = "Nethermind.Crypto.Pairings";
@@ -1500,6 +1495,12 @@
     hash = "sha256-QNg0JJNx+zXMQ26MJRPzH7THdtqjrNtGLUgaR1SdvOk=";
   })
   (fetchNuGet {
+    pname = "System.CommandLine";
+    version = "2.0.0-beta4.24528.1";
+    hash = "sha256-C1CMTF8ejnnk9h6Yih8ajWeNiQK6czWZTgBSEhGZNGQ=";
+    url = "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/516521bf-6417-457e-9a9c-0a4bdfde03e7/nuget/v3/flat2/system.commandline/2.0.0-beta4.24528.1/system.commandline.2.0.0-beta4.24528.1.nupkg";
+  })
+  (fetchNuGet {
     pname = "System.ComponentModel";
     version = "4.0.1";
     hash = "sha256-X5T36S49q1odsn6wAET6EGNlsxOyd66naMr5T3G9mGw=";
@@ -1783,12 +1784,6 @@
     pname = "System.IO.MemoryMappedFiles";
     version = "4.0.0";
     hash = "sha256-1VQa8FoMUNAsja31OvOn7ungif+IPusAe9YcR+kRF6o=";
-  })
-  (fetchNuGet {
-    pname = "System.CommandLine";
-    version = "2.0.0-beta4.24528.1";
-    hash = "sha256-C1CMTF8ejnnk9h6Yih8ajWeNiQK6czWZTgBSEhGZNGQ=";
-    url = "https://pkgs.dev.azure.com/dnceng/9ee6d478-d288-47f7-aacc-f6e6d082ae6d/_packaging/516521bf-6417-457e-9a9c-0a4bdfde03e7/nuget/v3/flat2/system.commandline/2.0.0-beta4.24528.1/system.commandline.2.0.0-beta4.24528.1.nupkg";
   })
   (fetchNuGet {
     pname = "System.IO.Pipelines";
