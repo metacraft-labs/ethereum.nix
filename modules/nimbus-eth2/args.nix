@@ -10,6 +10,7 @@ with lib; {
         "holesky"
         "gnosis"
         "chiado"
+        "hoodi"
       ]
     );
     default = null;
