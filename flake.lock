@@ -182,6 +182,29 @@
         "type": "github"
       }
     },
+    "nimbus-eth2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1742560866,
+        "narHash": "sha256-3/FXHzq6YrJUNa9/nHaV8xXn3IOqCT5ymf6VU6wlXIk=",
+        "ref": "v25.3.1",
+        "rev": "283ee0b3e86028c8dbd190cfe6d25f4063b451f7",
+        "revCount": 7262,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/status-im/nimbus-eth2"
+      },
+      "original": {
+        "ref": "v25.3.1",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/status-im/nimbus-eth2"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1717179513,
@@ -240,6 +263,7 @@
         "flake-utils": "flake-utils",
         "foundry-nix": "foundry-nix",
         "lib-extras": "lib-extras",
+        "nimbus-eth2": "nimbus-eth2",
         "nixpkgs": "nixpkgs",
         "nixpkgs-2311": "nixpkgs-2311",
         "nixpkgs-unstable": "nixpkgs-unstable",
