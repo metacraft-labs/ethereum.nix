@@ -56,6 +56,10 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    nimbus-eth2 = {
+      url = "git+https://github.com/status-im/nimbus-eth2?ref=v25.3.1&submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = inputs @ {
