@@ -19,7 +19,7 @@ rustPlatform.buildRustPackage rec {
     hash = "sha256-k1lRKylFhM96d1/eQ9rMQA0vb4DNW5wYo8mX7TnK43Q=";
   };
 
-  cargoHash = "sha256-ImBX/IJ6F6Xs/2K/8huvLkIMuZYzpfW6AWhE0lqQw2w=";
+  cargoHash = "sha256-V2CeQfASIsQmBdgYvSeev8XwewN/BnVmcBQinzincXE=";
 
   env = {
     # Make svm-rs use local release list rather than fetching from non-reproducible URL.
