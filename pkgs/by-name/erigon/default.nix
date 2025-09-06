@@ -1,10 +1,10 @@
 {
-  buildGoModule,
+  buildGo123Module,
   fetchFromGitHub,
   nix-update-script,
   subPackages ? ["cmd/erigon" "cmd/evm" "cmd/rpcdaemon" "cmd/rlpdump"],
 }:
-buildGoModule rec {
+buildGo123Module rec {
   pname = "erigon";
   version = "3.2.1";
 
