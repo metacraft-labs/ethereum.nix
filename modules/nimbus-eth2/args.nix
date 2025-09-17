@@ -46,8 +46,12 @@ with lib; {
   };
 
   doppelganger-detection = mkOption {
-    type = types.bool;
-    default = true;
+    type = types.enum [
+      "on"
+      "off"
+      "\${DOPPELGANGER_DETECTION}"
+    ];
+    default = "on";
     description = ''
       Protection against slashing due to double-voting.
       Means you will miss two attestations when restarting.
